@@ -1,0 +1,2 @@
+recursive-include py3dtilers *
+include README.md LICENSE

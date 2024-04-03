@@ -1,0 +1,126 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*,cover
+.hypothesis/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+# IPython Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# celery beat schedule file
+celerybeat-schedule
+
+# dotenv
+.env
+
+# virtualenv
+venv/
+ENV/
+
+# Spyder project settings
+.spyderproject
+
+# Rope project settings
+.ropeproject
+
+# PyCharm
+.idea/
+
+# Visual Studio Code settings
+.vscode/
+
+# 3DTiles
+junk/
+junk_buildings/
+junk_reliefs/
+junk_water_bodies/
+junk_bridges/
+profile_buildings/
+profile_reliefs/
+geojson_tilesets/
+ifc_tileset/
+obj_tilesets/
+tileset_reader_output/
+tileset_merger_output/
+
+# Debug OBJs
+/*.obj
+
+# Tests output
+tests/tiler_test_data/generated_tilesets
+tests/tiler_test_data/generated_objs
+tests/geojson_tiler_test_data/generated_objs
+tests/geojson_tiler_test_data/generated_tilesets
+tests/city_tiler_test_data/generated_tilesets/
+tests/city_tiler_test_data/test_config.yml
+tests/city_temporal_tiler_test_data/generated_tilesets/
+tests/obj_tiler_data/generated_tilesets
+tests/tileset_reader_test_data/generated_tilesets
+tests/tileset_reader_test_data/generated_objs
+tests/ifc_tiler_test_data/generated_tilesets
+
