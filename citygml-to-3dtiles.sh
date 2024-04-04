@@ -69,19 +69,27 @@ while true; do
 done
 
 options=""
+objects=""
 
 # Process user choice
 if [[ $choice == *"1"* ]]; then
-    while true; do
-    	echo
-        object_type=$(read_input "Enter Object Type (building/relief/water/bridge/traffic): ")
-        if validate_input "^(building|relief|water|bridge|traffic)$" "$object_type"; then
-            options+=" --type $object_type"
-            break
-        else
-            echo "Invalid Object Type. Please enter building, relief, water, or bridge."
-        fi
-    done
+    echo
+    echo "Object Types available: building, relief, water, bridge, traffic, tunnel, plant, furniture, all"
+    echo "Enter multiple types separated by spaces (e.g., 'building water traffic'):"
+    read -ra object_types_input
+
+    # If 'all' is entered, populate 'objects' with all available object types
+    if [[ " ${object_types_input[@]} " =~ " all " ]]; then
+        objects=("building" "relief" "water" "bridge" "traffic" "tunnel" "plant" "furniture")
+    else
+        for object_type_input in "${object_types_input[@]}"; do
+            if validate_input "^(building|relief|water|bridge|traffic|tunnel|plant|furniture)$" "$object_type_input"; then
+                objects+=("$object_type_input")
+            else
+                echo "Invalid Object Type: $object_type_input. Skipping..."
+            fi
+        done
+    fi
 fi
 
 if [[ $choice == *"2"* ]]; then
@@ -108,8 +116,11 @@ fi
 
 # Convert
 echo
-citygml-tiler -i py3dtilers/CityTiler/CityTilerDBConfig.yml $options
-
+for object in ${objects[@]}; do
+    echo
+    echo "Processing object type -> $object"
+    citygml-tiler -i py3dtilers/CityTiler/CityTilerDBConfig.yml --type $object $options
+done
 
 # Leave the virtual environment
 deactivate 

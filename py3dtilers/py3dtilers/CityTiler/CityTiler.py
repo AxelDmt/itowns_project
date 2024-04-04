@@ -7,13 +7,16 @@ from .citym_relief import CityMReliefs
 from .citym_waterbody import CityMWaterBodies
 from .citym_bridge import CityMBridges
 from .citym_transportationcomplex import CityMTransportationComplexes
+from .citym_tunnel import CityMTunnels
+from .citym_plantcover import CityMPlantCovers
+from .citym_furniture import CityMFurnitures
 from .database_accesses import open_data_base
 
 
 class CityTiler(Tiler):
     """
     The CityTiler can read 3DCityDB databases and create 3DTiles.
-    The database can contain buildings, bridges, relief, water bodies or traffic areas.
+    The database can contain buildings, bridges, relief, water bodies, transportation complexes, tunnels, plant covers or city furnitures.
     """
 
     def __init__(self):
@@ -25,7 +28,7 @@ class CityTiler(Tiler):
                                  nargs='?',
                                  default='building',
                                  type=str,
-                                 choices=['building', 'relief', 'water', 'bridge', 'traffic'],
+                                 choices=['building', 'relief', 'water', 'bridge', 'traffic', 'tunnel', 'plant', 'furniture'],
                                  help='identify the object type to seek in the database')
 
         # adding optional arguments
@@ -59,6 +62,12 @@ class CityTiler(Tiler):
                 return "junk_bridges"
             elif self.args.type == "traffic":
                 return "junk_traffic"
+            elif self.args.type == "tunnel":
+                return "junk_tunnel"
+            elif self.args.type == "plant":
+                return "junk_plant"
+            elif self.args.type == "furniture":
+                return "junk_furniture"
             else:
                 return "junk"
         else:
@@ -143,6 +152,12 @@ def main():
         objects_type = CityMBridges
     elif args.type == "traffic":
         objects_type = CityMTransportationComplexes
+    elif args.type == "tunnel":
+        objects_type = CityMTunnels
+    elif args.type == "plant":
+        objects_type = CityMPlantCovers
+    elif args.type == "furniture":
+        objects_type = CityMFurnitures
 
     print('Connecting to database...')
     cursor = open_data_base(city_tiler.files[0])

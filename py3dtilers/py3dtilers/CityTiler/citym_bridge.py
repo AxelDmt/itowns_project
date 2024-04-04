@@ -68,17 +68,19 @@ class CityMBridges(CityMCityObjects):
                 "SELECT surface_geometry.id, ST_AsBinary(ST_Multi( " + \
                 "surface_geometry.geometry)), " + \
                 "objectclass.classname " + \
-                "FROM citydb.surface_geometry JOIN citydb.bridge " + \
-                "ON surface_geometry.root_id=bridge.lod2_multi_surface_id " + \
-                "JOIN citydb.objectclass ON bridge.objectclass_id = objectclass.id " + \
+                "FROM citydb.surface_geometry JOIN citydb.bridge_thematic_surface " + \
+                "ON surface_geometry.root_id=bridge_thematic_surface.lod2_multi_surface_id " + \
+                "JOIN citydb.bridge ON bridge_thematic_surface.bridge_id = bridge.id " + \
+                "JOIN citydb.objectclass ON bridge_thematic_surface.objectclass_id = objectclass.id " + \
                 "WHERE bridge.bridge_root_id IN " + bridges_ids_arg
         else:
             query = \
                 "SELECT bridge.bridge_root_id, ST_AsBinary(ST_Multi(ST_Collect( " + \
                 "surface_geometry.geometry))), " + \
                 "objectclass.classname " + \
-                "FROM citydb.surface_geometry JOIN citydb.bridge " + \
-                "ON surface_geometry.root_id=bridge.lod2_multi_surface_id " + \
+                "FROM citydb.surface_geometry JOIN citydb.bridge_thematic_surface " + \
+                "ON surface_geometry.root_id=bridge_thematic_surface.lod2_multi_surface_id " + \
+                "JOIN citydb.bridge ON bridge_thematic_surface.bridge_id = bridge.id " + \
                 "JOIN citydb.objectclass ON bridge.objectclass_id = objectclass.id " + \
                 "WHERE bridge.bridge_root_id IN " + bridges_ids_arg + " " + \
                 "GROUP BY bridge.bridge_root_id, objectclass.classname"
@@ -100,8 +102,9 @@ class CityMBridges(CityMCityObjects):
             ",ST_Centroid(ST_Multi(ST_Collect(surface_geometry.geometry))))), " + \
             "ST_Z(ST_3DClosestPoint(ST_Multi(ST_Collect(surface_geometry.geometry)) " + \
             ",ST_Centroid(ST_Multi(ST_Collect(surface_geometry.geometry))))) " + \
-            "FROM citydb.surface_geometry JOIN citydb.bridge " + \
-            "ON surface_geometry.root_id=bridge.lod2_multi_surface_id " + \
+            "FROM citydb.surface_geometry JOIN citydb.bridge_thematic_surface " + \
+            "ON surface_geometry.root_id=bridge_thematic_surface.lod2_multi_surface_id " + \
+            "JOIN citydb.bridge ON bridge_thematic_surface.bridge_id = bridge.id " + \
             "WHERE bridge.bridge_root_id = " + str(id) + \
             " GROUP BY bridge.bridge_root_id"
 

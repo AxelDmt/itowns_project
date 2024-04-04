@@ -56,7 +56,7 @@ class CityMTransportationComplexes(CityMCityObjects):
                 "surface_geometry.geometry)), " + \
                 "objectclass.classname " + \
                 "FROM citydb.surface_geometry JOIN citydb.traffic_area " + \
-                "ON surface_geometry.root_id=ttraffic.lod2_multi_surface_id " + \
+                "ON surface_geometry.root_id=traffic_area.lod2_multi_surface_id " + \
                 "JOIN citydb.transportation_complex ON traffic_area.transportation_complex_id = transportation_complex.id " + \
                 "JOIN citydb.objectclass ON traffic_area.objectclass_id = objectclass.id " + \
                 "WHERE transportation_complex.id IN " + transportation_complex_ids_arg

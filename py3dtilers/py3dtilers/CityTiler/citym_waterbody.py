@@ -82,7 +82,7 @@ class CityMWaterBodies(CityMCityObjects):
                 "ON waterbody.id=waterbod_to_waterbnd_srf.waterbody_id " + \
                 "JOIN citydb.waterboundary_surface " + \
                 "ON waterbod_to_waterbnd_srf.waterboundary_surface_id=waterboundary_surface.id " + \
-                "JOIN citydb.surface_geometry ON surface_geometry.root_id=waterboundary_surface.lod3_surface_id " + \
+                "JOIN citydb.surface_geometry ON surface_geometry.root_id=waterboundary_surface.lod2_surface_id " + \
                 "JOIN citydb.objectclass ON waterboundary_surface.objectclass_id = objectclass.id " + \
                 "WHERE waterbody.id IN " + waterbodies_ids
         else:
@@ -93,7 +93,7 @@ class CityMWaterBodies(CityMCityObjects):
                 "ON waterbody.id=waterbod_to_waterbnd_srf.waterbody_id " + \
                 "JOIN citydb.waterboundary_surface " + \
                 "ON waterbod_to_waterbnd_srf.waterboundary_surface_id=waterboundary_surface.id " + \
-                "JOIN citydb.surface_geometry ON surface_geometry.root_id=waterboundary_surface.lod3_surface_id " + \
+                "JOIN citydb.surface_geometry ON surface_geometry.root_id=waterboundary_surface.lod2_surface_id " + \
                 "JOIN citydb.objectclass ON waterbody.objectclass_id = objectclass.id " + \
                 "WHERE waterbody.id IN " + waterbodies_ids + " " + \
                 "GROUP BY waterbody.id, objectclass.classname"
@@ -118,7 +118,7 @@ class CityMWaterBodies(CityMCityObjects):
              "JOIN citydb.waterboundary_surface "
              "ON waterbod_to_waterbnd_srf.waterboundary_surface_id=waterboundary_surface.id "
              "JOIN citydb.surface_geometry "
-             "ON surface_geometry.root_id=waterboundary_surface.lod3_surface_id "
+             "ON surface_geometry.root_id=waterboundary_surface.lod2_surface_id "
              "JOIN citydb.textureparam "
              "ON textureparam.surface_geometry_id=surface_geometry.id "
              "JOIN citydb.surface_data "
@@ -147,7 +147,7 @@ class CityMWaterBodies(CityMCityObjects):
             "ON waterbody.id=waterbod_to_waterbnd_srf.waterbody_id " + \
             "JOIN citydb.waterboundary_surface " + \
             "ON waterbod_to_waterbnd_srf.waterboundary_surface_id=waterboundary_surface.id " + \
-            "JOIN citydb.surface_geometry ON surface_geometry.root_id=waterboundary_surface.lod3_surface_id " + \
+            "JOIN citydb.surface_geometry ON surface_geometry.root_id=waterboundary_surface.lod2_surface_id " + \
             "WHERE waterbody.id = " + str(id) + \
             " GROUP BY waterbody.id"
 
