@@ -7,7 +7,7 @@ const viewerDiv = document.getElementById('viewerDiv');
 
 // Define an initial camera position
 const placement = {
-    coord: new itowns.Coordinates('EPSG:4326', 5.3665993, 43.2989838),
+    coord: new itowns.Coordinates('EPSG:4326', 5.384330, 43.302516),
     range: 2500,
 };
 
@@ -152,6 +152,12 @@ function toggleLayerVisibility(layer, value) {
     view.notifyChange();
 }
 
+function changeLayerOpacity(layer, value) {
+    layer.transparent = true;
+    layer.opacity = value;
+    view.notifyChange();
+}
+
 /**//**//**//**//**//**//* Dictionnary *//**//**//**//**//**//**//**//**//**//**//**//**//**/
 
 const layers = {
@@ -173,40 +179,64 @@ const buildingFolder = layersFolder.addFolder('Buildings');
 buildingFolder.add(layers, 'buildings').onChange((value) => {
     toggleLayerVisibility(buildingsLayer, value);
 });
+buildingFolder.add(buildingsLayer, 'opacity').min(0).max(1).step(0.1).onChange((value) => {
+    changeLayerOpacity(buildingsLayer, value);
+});
 
 const trafficFolder = layersFolder.addFolder('Traffic');
 trafficFolder.add(layers, 'traffic').onChange((value) => {
     toggleLayerVisibility(trafficLayer, value);
+});
+trafficFolder.add(trafficLayer, 'opacity').min(0).max(1).step(0.1).onChange((value) => {
+    changeLayerOpacity(trafficLayer, value);
 });
 
 const bridgeFolder = layersFolder.addFolder('Bridges');
 bridgeFolder.add(layers, 'bridge').onChange((value) => {
     toggleLayerVisibility(bridgeLayer, value);
 });
+bridgeFolder.add(bridgeLayer, 'opacity').min(0).max(1).step(0.1).onChange((value) => {
+    changeLayerOpacity(bridgeLayer, value);
+});
 
 const tunnelFolder = layersFolder.addFolder('Tunnels');
 tunnelFolder.add(layers, 'tunnel').onChange((value) => {
     toggleLayerVisibility(tunnelLayer, value);
+});
+tunnelFolder.add(tunnelLayer, 'opacity').min(0).max(1).step(0.1).onChange((value) => {
+    changeLayerOpacity(tunnelLayer, value);
 });
 
 const furnitureFolder = layersFolder.addFolder('City Furnitures');
 furnitureFolder.add(layers, 'furniture').onChange((value) => {
     toggleLayerVisibility(furnitureLayer, value);
 });
+furnitureFolder.add(furnitureLayer, 'opacity').min(0).max(1).step(0.1).onChange((value) => {
+    changeLayerOpacity(furnitureLayer, value);
+});
 
 const reliefFolder = layersFolder.addFolder('Reliefs');
 reliefFolder.add(layers, 'reliefs').onChange((value) => {
     toggleLayerVisibility(reliefsLayer, value);
+});
+reliefFolder.add(reliefsLayer, 'opacity').min(0).max(1).step(0.1).onChange((value) => {
+    changeLayerOpacity(reliefsLayer, value);
 });
 
 const plantFolder = layersFolder.addFolder('Plant Covers');
 plantFolder.add(layers, 'plant').onChange((value) => {
     toggleLayerVisibility(plantLayer, value);
 });
+plantFolder.add(plantLayer, 'opacity').min(0).max(1).step(0.1).onChange((value) => {
+    changeLayerOpacity(plantLayer, value);
+});
 
 const waterFolder = layersFolder.addFolder('Water Bodies');
 waterFolder.add(layers, 'water').onChange((value) => {
     toggleLayerVisibility(waterLayer, value);
+});
+waterFolder.add(waterLayer, 'opacity').min(0).max(1).step(0.1).onChange((value) => {
+    changeLayerOpacity(waterLayer, value);
 });
 
 /**//**//**//**//**//**//* GUI Style *//**//**//**//**//**//**//**//**//**//**//**//**//**/
