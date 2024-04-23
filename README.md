@@ -229,7 +229,7 @@ For this step we first need to **have .obj files**, if not and your files are .3
 ./3ds_to_obj.sh
 ```
 
-Before the next execute lines you need to **personalize [objTransformer.py](python-scripts/implicit-geom/objtransformer.py/)** in /python-scripts/implicit-geom/ directory :
+Before the next execute lines you need to **personalize [objTransformer.py](python-scripts/implicit-geom/objTransformer.py)** in /python-scripts/implicit-geom/ directory :
 
 ```python
 # Example usage:
