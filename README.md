@@ -182,6 +182,7 @@ To use iTowns and visualize your converted data, go to : **[http://localhost:808
 ### Explore your 3D dataset with iTowns
 
 **Controls :**
+
 → Left click : translate on X Y Axis
 
 → Right click : translate on Z Axis
