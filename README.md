@@ -250,4 +250,4 @@ Afterwards **execute** those lines :
 python3 [objTransformer.py](http://objtransformer.py/)
 obj-tiler -i path/to/file.obj -o junk_implicitgeom --crs_in "crs of your transformed .obj file" --crs_out 4978
 ```
-**⚠** Watch out the rotation of your 3D Objects
+**⚠ Watch out the rotation of your 3D Objects**
