@@ -23,7 +23,7 @@ export PGUSER=postgres
 #------------------------------------------------------------------------------
 ```
 
-When this is done, **execute [init-3dcitydb.sh](http://init-3dcitydb.sh)** :
+When this is done, **execute [init-3dcitydb.sh](init-3dcitydb.sh)** :
 
 ```bash
 ./init-3dcitydb.sh
@@ -219,7 +219,7 @@ itowns.View.prototype.addLayer.call(view, reliefsLayer);
 
 ### Collect informations
 
-**Run** the [bdexporter.py](http://bdexporter.py) python script. This code will create a dictionnary which regroup useful informations about implicit geometries.
+**Run** the [bdexporter.py](bdexporter.py) python script. This code will create a dictionnary which regroup useful informations about implicit geometries.
 
 ### Georeferenced 3D objects
 
@@ -229,7 +229,7 @@ For this step we first need to **have .obj files**, if not and your files are .3
 ./3ds_to_obj.sh
 ```
 
-Before the next execute lines you need to **personalize [objTransformer.py](http://objtransformer.py/)** in /python-scripts/implicit-geom/ directory :
+Before the next execute lines you need to **personalize [objTransformer.py](objtransformer.py/)** in /python-scripts/implicit-geom/ directory :
 
 ```python
 # Example usage:
