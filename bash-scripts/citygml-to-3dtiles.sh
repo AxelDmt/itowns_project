@@ -1,6 +1,9 @@
 # Save current_dir
 current_dir=$(pwd)
 
+# Back to lobby
+cd ..
+
 # Go to py3dtiler repertory
 cd py3dtilers
 

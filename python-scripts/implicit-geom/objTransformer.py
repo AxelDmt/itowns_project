@@ -56,15 +56,15 @@ def transform_obj_file(input_file, output_file, matrix, point_reel):
 
 
 # Example usage:
-matrix = [
-    0.3293716848873304, 0.0, 0.0, 0.0,
-    0.0, 0.3293716848873304, 0.0, 0.0,
-    0.0, 0.0, 0.3293716848873304, 3.155216055378181,
+matrix = [                  
+    1.0, 0.0, 0.0, 0.0,
+    0.0, 1.0, 0.0, 0.0,        #Write your matrix as a simple List
+    0.0, 0.0, 1.0, 1.0,
     0.0, 0.0, 0.0, 1.0
 ]
-input_file = 'assets/implicit/3ds_obj/StreetLamp_PT.obj'  # Path to your .obj file
-point_reel = "01010000A0E61000002E90A0A8A6372B41123125AA84D457415C9C83CDD73C3040"
-output_file = 'StreetLamp_PT_georef.obj'
+input_file = 'path/to/file.obj'  # Path to your .obj file
+point_reel = "your wkb coordinate in hexadecimal"
+output_file = 'output/output.obj'
 transform_obj_file(input_file, output_file, matrix, point_reel)
 
 

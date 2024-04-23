@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#Back to lobby
+cd ..
+
 # Variables pour la connexion à la base de données
 DB_USER=postgres
 DB_PASSWORD=postgres

@@ -3,6 +3,9 @@
 # Save current_dir
 current_dir=$(pwd)
 
+#Back to lobby
+cd ..
+
 # Welcome message
 echo '######################################################################################'
 echo ' ________  _________ ___________ _____ '
@@ -38,7 +41,7 @@ if [ "$import_choice" == "1" ]; then
     read -p "Database name: " database
     read -p "Import Mode (import_all/skip/delete/terminate): " import_mode
     read -p "Path to file (path/to/file/city.gml): " file_path
-
+    
     # Access to impexp command
     cd 3DCityDB-Importer-Exporter-5.4.0/bin
     # Execute import
