@@ -23,7 +23,7 @@ export PGUSER=postgres
 #------------------------------------------------------------------------------
 ```
 
-When this is done, **execute [init-3dcitydb.sh]([init-3dcitydb.sh](https://github.com/AxelDmt/itowns_project/blob/master/bash-scripts/init-3dcitydb.sh))** :
+When this is done, **execute [init-3dcitydb.sh]([init-3dcitydb.sh])** :
 
 ```bash
 ./init-3dcitydb.sh
