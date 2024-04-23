@@ -219,7 +219,7 @@ itowns.View.prototype.addLayer.call(view, reliefsLayer);
 
 ### Collect informations
 
-**Run** the [bdexporter.py](python-scripts/implicit-geom/bdexporter.py) python script. This code will create a dictionnary which regroup useful informations about implicit geometries.
+**Run the [bdexporter.py](python-scripts/implicit-geom/bdexporter.py)** python script. This code will create a dictionnary which regroup useful informations about implicit geometries.
 
 ### Georeferenced 3D objects
 
