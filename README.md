@@ -1,4 +1,4 @@
-# iTowns pipelines to convert CityGML data from 3DCityDB into 3DTiles
+# Itowns - CityGML to 3DTiles pipeline
 
 ## Initialize repository
 
@@ -10,7 +10,7 @@ cd itowns_project
 
 ## Initialize 3DCityDB on PostgreSQL
 
-Go to ../3dcitydb-4.4.0/postgresql/ShellScripts/Unix/CONNECTION_DETAILS.sh and change the content of the file to this : 
+Go to ../3dcitydb-4.4.0/postgresql/ShellScripts/Unix/CONNECTION_DETAILS.sh and **change the content** of the file to this : 
 
 ```bash
 #!/bin/bash
@@ -23,7 +23,7 @@ export PGUSER=postgres
 #------------------------------------------------------------------------------
 ```
 
-When this is done, execute [init-3dcitydb.sh](http://init-3dcitydb.sh) :
+When this is done, **execute [init-3dcitydb.sh](http://init-3dcitydb.sh)** :
 
 ```bash
 ./init-3dcitydb.sh
@@ -135,7 +135,7 @@ Path to directory containing CityGML files (path/to/directory):
 ./citygml-to-3dtiles.sh
 ```
 
-If everythings runs the right way (and enter ‘21’ or ‘12’) you should see this :
+If everything runs the right way (and enter ‘21’ or ‘12’) you should see this :
 
 ```bash
 ######################################################################################
@@ -177,4 +177,75 @@ Enter Output CRS: 4978
 
 ## Use iTowns
 
-To use iTowns and visualize your converted data, go to : http://localhost:8080/
+To use iTowns and visualize your converted data, go to : **[http://localhost:8080/](http://localhost:8080/)** 
+
+### Explore your 3D dataset with iTowns
+
+**Controls :**
+→ Left click : translate on X Y Axis
+
+→ Right click : translate on Z Axis
+
+→ Left shif + left click : rotate on X Y Z Axis
+
+![Capture d’écran du 2024-04-23 14-39-21.png](assets/Capture_dcran_du_2024-04-23_14-39-21.png)
+
+### Choose which layer you want to see with control menu
+
+![Capture d’écran du 2024-04-23 14-39-43.png](assets/Capture_dcran_du_2024-04-23_14-39-43.png)
+
+![Capture d’écran du 2024-04-23 14-40-08.png](assets/Capture_dcran_du_2024-04-23_14-40-08.png)
+
+### Tips
+
+You can **change the color** of each layer by modifying the index.js code in itowns-starter-webpack/src directory like showed in the example bellow : 
+
+```python
+///////////////////////////// Relief /////////////////////////////////////////////////////////
+
+const reliefsSource = new itowns.C3DTilesSource({
+    url: 'http://localhost:8000/py3dtilers/junk_reliefs/tileset.json',
+});
+
+const reliefsLayer = new itowns.C3DTilesLayer('reliefs', {
+    source: reliefsSource,
+    style: { fill: { color: 'yellowgreen'}}, //<- CHANGE THE COLOR HERE
+}, view);
+itowns.View.prototype.addLayer.call(view, reliefsLayer);
+```
+
+## How to deals with implicit geometries ?
+
+### Collect informations
+
+**Run** the [bdexporter.py](http://bdexporter.py) python script. This code will create a dictionnary which regroup useful informations about implicit geometries.
+
+### Georeferenced 3D objects
+
+For this step we first need to **have .obj files**, if not and your files are .3ds execute : 
+
+```bash
+./3ds_to_obj.sh
+```
+
+Before the next execute lines you need to **personalize [objTransformer.py](http://objtransformer.py/)** in /python-scripts/implicit-geom/ directory :
+
+```python
+# Example usage:
+matrix = [                  
+    1.0, 0.0, 0.0, 0.0,
+    0.0, 1.0, 0.0, 0.0,        #Write your matrix as a simple List
+    0.0, 0.0, 1.0, 1.0,
+    0.0, 0.0, 0.0, 1.0
+]
+input_file = 'path/to/file.obj'  # Path to your .obj file
+point_reel = "your wkb coordinate in hexadecimal"
+output_file = 'output/output.obj'
+```
+
+Afterwards **execute** those lines : 
+
+```bash
+python3 [objTransformer.py](http://objtransformer.py/)
+obj-tiler -i path/to/file.obj -o junk_implicitgeom --crs_in "crs of your transformed .obj file" --crs_out 4978
+```

@@ -19,7 +19,7 @@ for fichier_3ds in "$dossier"/*.3ds; do
         fichier_obj="${fichier_3ds%.3ds}.obj"
         
         # Conversion .3ds en .obj avec assimp
-        assimp export "$fichier_3ds" "$fichier_obj"
+        assimp export "$fichier_3ds" "$fichier_obj" -yup
 
         # Vérifier si la conversion a réussi
         if [ $? -eq 0 ]; then

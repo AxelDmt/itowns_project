@@ -49,17 +49,13 @@ itowns.View.prototype.addLayer.call(view, buildingsLayer);
 
 ///////////////////////////// Relief /////////////////////////////////////////////////////////
 
-const style = {
-     fill: { color: 'green' },
-};
-
 const reliefsSource = new itowns.C3DTilesSource({
     url: 'http://localhost:8000/py3dtilers/junk_reliefs/tileset.json',
 });
 
 const reliefsLayer = new itowns.C3DTilesLayer('reliefs', {
     source: reliefsSource,
-    style: { fill: { color: 'yellowgreen'}},
+    style: { fill: { color: 'yellowgreen'}}, //<- CHANGE THE COLOR HERE
 }, view);
 itowns.View.prototype.addLayer.call(view, reliefsLayer);
 
