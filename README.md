@@ -220,7 +220,7 @@ itowns.View.prototype.addLayer.call(view, reliefsLayer);
 First of all you need to run one of the **bdexporters** python script (bdexporter_building for buildings implicit geometries).
 
 ```bash
-python3 bdexporter_building.py
+python3 bdexporter_building.py #example
 ```
 
 After you need to do some changes in the [obj_to_3dtiles.sh](obj_to_3dtiles.sh) depending of the type of data you requested : 
