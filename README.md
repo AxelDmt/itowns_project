@@ -217,37 +217,25 @@ itowns.View.prototype.addLayer.call(view, reliefsLayer);
 
 ## How to deals with implicit geometries ?
 
-### Collect informations
-
-**Run the [bdexporter.py](python-scripts/implicit-geom/bdexporter.py)** python script. This code will create a dictionnary which regroup useful informations about implicit geometries.
-
-### Georeferenced 3D objects
-
-For this step we first need to **have .obj files**, if not and your files are .3ds execute : 
+First of all you need to run one of the **bdexporters** python script (bdexporter_building for buildings implicit geometries).
 
 ```bash
-./3ds_to_obj.sh
+python3 bdexporter_building.py
 ```
 
-Before the next execute lines you need to **personalize [objTransformer.py](python-scripts/implicit-geom/objTransformer.py)** in /python-scripts/implicit-geom/ directory :
+After you need to do some changes in the obj_to_3dtiles.sh depending of the type of data you requested : 
 
 ```python
-# Example usage:
-matrix = [                  
-    1.0, 0.0, 0.0, 0.0,
-    0.0, 1.0, 0.0, 0.0,        #Write your matrix as a simple List
-    0.0, 0.0, 1.0, 1.0,
-    0.0, 0.0, 0.0, 1.0
-]
-input_file = 'path/to/file.obj'  # Path to your .obj file
-point_reel = "your wkb coordinate in hexadecimal"
-output_file = 'output/output.obj'
+# Path to .obj directory
+input_dir="py3dtilers/output_/" #<-- py3dtilers/output_building/ for example
+
+# Output path
+output_dir="py3dtilers/output_/output_dir" #<-- same here
 ```
 
-Afterwards **execute** those lines : 
+Next you will run the script :
 
 ```bash
-python3 [objTransformer.py](http://objtransformer.py/)
-obj-tiler -i path/to/file.obj -o junk_implicitgeom --crs_in "crs of your transformed .obj file" --crs_out 4978
+./obj_to_3dtiles.sh
 ```
 **⚠ Watch out the rotation of your 3D Objects**
