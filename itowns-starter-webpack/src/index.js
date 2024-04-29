@@ -35,6 +35,15 @@ const imageryLayer = new itowns.ColorLayer('imagery', {
 // Add it to source view!
 view.addLayer(imageryLayer);
 
+// Create a new 3D tiles layer with batch table hierarchy extension
+const extensions = new itowns.C3DTExtensions();
+
+extensions.registerExtension("3DTILES_batch_table_hierarchy",
+    { [itowns.C3DTilesTypes.batchtable]:
+        itowns.C3DTBatchTableHierarchyExtension });
+
+const promises = [];
+
 ///////////////////////////// Building ///////////////////////////////////////////////////////
 
 const buildingsSource = new itowns.C3DTilesSource({
@@ -44,10 +53,30 @@ const buildingsSource = new itowns.C3DTilesSource({
 const buildingsLayer = new itowns.C3DTilesLayer('buildings', {
     source: buildingsSource,
     style: { fill: { color: 'yellow'}},
+    registeredExtensions: extensions,
 }, view);
-itowns.View.prototype.addLayer.call(view, buildingsLayer);
+
+
+promises.push(itowns.View.prototype.addLayer.call(view, buildingsLayer));
+
+///////////////////////////// Building Implicit Geom /////////////////////////////////////////////////////////
+
+const implicitbuildingSource = new itowns.C3DTilesSource({
+    url: 'http://localhost:8000/py3dtilers/merged_tileset_building/tileset.json'
+});
+
+const implicitbuildingLayer = new itowns.C3DTilesLayer('implicit_building', {
+    source: implicitbuildingSource,
+    style: { fill: { color: 'red'}}
+}, view);
+
+promises.push(itowns.View.prototype.addLayer.call(view, implicitbuildingLayer));
 
 ///////////////////////////// Relief /////////////////////////////////////////////////////////
+
+const style = {
+     fill: { color: 'green' },
+};
 
 const reliefsSource = new itowns.C3DTilesSource({
     url: 'http://localhost:8000/py3dtilers/junk_reliefs/tileset.json',
@@ -55,9 +84,11 @@ const reliefsSource = new itowns.C3DTilesSource({
 
 const reliefsLayer = new itowns.C3DTilesLayer('reliefs', {
     source: reliefsSource,
-    style: { fill: { color: 'yellowgreen'}}, //<- CHANGE THE COLOR HERE
+    style: { fill: { color: 'white'}},
+    registeredExtensions: extensions,
 }, view);
-itowns.View.prototype.addLayer.call(view, reliefsLayer);
+
+promises.push(itowns.View.prototype.addLayer.call(view, reliefsLayer));
 
 ///////////////////////////// Traffic ///////////////////////////////////////////////////////
 
@@ -67,9 +98,10 @@ const trafficSource = new itowns.C3DTilesSource({
 
 const trafficLayer = new itowns.C3DTilesLayer('traffic', {
     source: trafficSource,
-    style: { fill: { color: 'lightgrey'}},
+    style: { fill: { color: 'white'}},
 }, view);
-itowns.View.prototype.addLayer.call(view, trafficLayer);
+
+promises.push(itowns.View.prototype.addLayer.call(view, trafficLayer));
 
 
 ///////////////////////////// Water /////////////////////////////////////////////////////////
@@ -82,7 +114,8 @@ const waterLayer = new itowns.C3DTilesLayer('water_bodies', {
     source: waterSource,
     style: { fill: { color: 'blue'}}
 }, view);
-itowns.View.prototype.addLayer.call(view, waterLayer);
+
+promises.push(itowns.View.prototype.addLayer.call(view, waterLayer));
 
 ///////////////////////////// Bridge /////////////////////////////////////////////////////////
 
@@ -94,7 +127,8 @@ const bridgeLayer = new itowns.C3DTilesLayer('bridge', {
     source: bridgeSource,
     style: { fill: { color: 'red'}}
 }, view);
-itowns.View.prototype.addLayer.call(view, bridgeLayer);
+
+promises.push(itowns.View.prototype.addLayer.call(view, bridgeLayer));
 
 ///////////////////////////// Tunnel /////////////////////////////////////////////////////////
 
@@ -106,7 +140,8 @@ const tunnelLayer = new itowns.C3DTilesLayer('tunnel', {
     source: tunnelSource,
     style: { fill: { color: 'black'}}
 }, view);
-itowns.View.prototype.addLayer.call(view, tunnelLayer);
+
+promises.push(itowns.View.prototype.addLayer.call(view, tunnelLayer));
 
 ///////////////////////////// Plant Covers /////////////////////////////////////////////////////////
 
@@ -118,7 +153,21 @@ const plantLayer = new itowns.C3DTilesLayer('plant', {
     source: plantSource,
     style: { fill: { color: 'darkgreen'}}
 }, view);
-itowns.View.prototype.addLayer.call(view, plantLayer);
+
+promises.push(itowns.View.prototype.addLayer.call(view, plantLayer));
+
+///////////////////////////// Vegetation Implicit Geom /////////////////////////////////////////////////////////
+
+const implicitvegetationSource = new itowns.C3DTilesSource({
+    url: 'http://localhost:8000/py3dtilers/merged_tileset_vege/tileset.json'
+});
+
+const implicitvegetationLayer = new itowns.C3DTilesLayer('implicit_vegetation', {
+    source: implicitvegetationSource,
+    style: { fill: { color: 'red'}}
+}, view);
+
+promises.push(itowns.View.prototype.addLayer.call(view, implicitvegetationLayer));
 
 ///////////////////////////// City Furnitures /////////////////////////////////////////////////////////
 
@@ -130,20 +179,21 @@ const furnitureLayer = new itowns.C3DTilesLayer('furniture', {
     source: furnitureSource,
     style: { fill: { color: 'pink'}}
 }, view);
-itowns.View.prototype.addLayer.call(view, furnitureLayer);
 
-///////////////////////////// Test /////////////////////////////////////////////////////////
+promises.push(itowns.View.prototype.addLayer.call(view, furnitureLayer));
 
-const testSource = new itowns.C3DTilesSource({
-    url: 'http://localhost:8000/py3dtilers/3dtiles/tileset.json'
+///////////////////////////// City Furnitures Implicit Geom /////////////////////////////////////////////////////////
+
+const implicitfurnitureSource = new itowns.C3DTilesSource({
+    url: 'http://localhost:8000/py3dtilers/merged_tileset_furniture/tileset.json'
 });
 
-const testLayer = new itowns.C3DTilesLayer('test', {
-    source: testSource,
+const implicitfurnitureLayer = new itowns.C3DTilesLayer('implicit_furniture', {
+    source: implicitfurnitureSource,
     style: { fill: { color: 'red'}}
 }, view);
-itowns.View.prototype.addLayer.call(view, testLayer);
-testLayer.whenReady.then(() => console.log(testLayer.tileset));
+
+promises.push(itowns.View.prototype.addLayer.call(view, implicitfurnitureLayer));
 
 ///////////////////////////// GUI /////////////////////////////////////////////////////////
 
@@ -165,7 +215,46 @@ function changeLayerOpacity(layer, value) {
     layer.transparent = true;
     layer.opacity = value;
     console.log(layer.opacity);
-    view.notifyChange();
+    view.notifyChange(true);
+}
+
+Promise.all(promises).then(function _(layers) {
+    window.addEventListener('mousemove',
+        (event) => pickLayersInfo(event, layers),false);
+});
+
+var pickingArgs = {};
+pickingArgs.htmlDiv = document.getElementById('featureInfo');
+pickingArgs.view = view;
+pickingArgs.layer = buildingsLayer;
+
+let time;
+function pickLayersInfo(event, layers) {
+    const currentTime = Date.now();
+    if (currentTime - time < 100000) return;
+    time = currentTime;
+
+    layers.forEach((l) => pickLayerInfo(event, l));
+}
+
+function pickLayerInfo(event, layer) {
+
+
+    if (!layer.isC3DTilesLayer) {
+        console.warn('Function fillHTMLWithPickingInfo only works' +
+            ' for C3DTilesLayer layers.');
+        return;
+    }
+
+    // Get intersected objects
+    const intersects = view.pickObjectsAt(event, 5, layer);
+    if (intersects.length === 0) { return; }
+
+    // Get information from intersected objects (from the batch table and
+    // eventually the 3D Tiles extensions
+    const closestC3DTileFeature = layer.getC3DTileFeatureFromIntersectsArray(intersects);
+
+    console.log(closestC3DTileFeature.getInfo().batchTable);
 }
 
 //########################## Dictionnary ###################################################//
@@ -179,6 +268,9 @@ const layers = {
     tunnel: true,
     plant: true,
     furniture: true,
+    implicit_furniture: true,
+    implicit_building: true,
+    implicit_vegetation: true,
 };
 
 //########################## GUI Folders ###################################################//
@@ -191,6 +283,14 @@ buildingFolder.add(layers, 'buildings').onChange((value) => {
 });
 buildingFolder.add(buildingsLayer, 'opacity').min(0.0).max(1.0).step(0.01).onChange((value) => {
     changeLayerOpacity(buildingsLayer, value);
+});
+
+const implicitbuildingFolder = layersFolder.addFolder('Implicit Building');
+implicitbuildingFolder.add(layers, 'implicit_building').onChange((value) => {
+    toggleLayerVisibility(implicitbuildingLayer, value);
+});
+implicitbuildingFolder.add(implicitbuildingLayer, 'opacity').min(0.0).max(1.0).step(0.01).onChange((value) => {
+    changeLayerOpacity(implicitbuildingLayer, value);
 });
 
 const trafficFolder = layersFolder.addFolder('Traffic');
@@ -225,6 +325,14 @@ furnitureFolder.add(furnitureLayer, 'opacity').min(0.0).max(1.0).step(0.01).onCh
     changeLayerOpacity(furnitureLayer, value);
 });
 
+const implicitfurnitureFolder = layersFolder.addFolder('Implicit City Furnitures');
+implicitfurnitureFolder.add(layers, 'implicit_furniture').onChange((value) => {
+    toggleLayerVisibility(implicitfurnitureLayer, value);
+});
+implicitfurnitureFolder.add(implicitfurnitureLayer, 'opacity').min(0.0).max(1.0).step(0.01).onChange((value) => {
+    changeLayerOpacity(implicitfurnitureLayer, value);
+});
+
 const reliefFolder = layersFolder.addFolder('Reliefs');
 reliefFolder.add(layers, 'reliefs').onChange((value) => {
     toggleLayerVisibility(reliefsLayer, value);
@@ -241,6 +349,14 @@ plantFolder.add(plantLayer, 'opacity').min(0.0).max(1.0).step(0.1).onChange((val
     changeLayerOpacity(plantLayer, value);
 });
 
+const implicitvegetationFolder = layersFolder.addFolder('Implicit Vegetation');
+implicitvegetationFolder.add(layers, 'implicit_vegetation').onChange((value) => {
+    toggleLayerVisibility(implicitvegetationLayer, value);
+});
+implicitvegetationFolder.add(implicitvegetationLayer, 'opacity').min(0.0).max(1.0).step(0.01).onChange((value) => {
+    changeLayerOpacity(implicitvegetationLayer, value);
+});
+
 const waterFolder = layersFolder.addFolder('Water Bodies');
 waterFolder.add(layers, 'water').onChange((value) => {
     toggleLayerVisibility(waterLayer, value);
@@ -254,5 +370,5 @@ waterFolder.add(waterLayer, 'opacity').min(0.0).max(1.0).step(0.01).onChange((va
 layersFolder.domElement.style.position = 'absolute';
 layersFolder.domElement.style.top = '0';
 layersFolder.domElement.style.left = '0';
-layersFolder.domElement.style.zIndex = '1000';
+layersFolder.domElement.style.zIndex = '100000';
 document.body.appendChild(layersFolder.domElement);

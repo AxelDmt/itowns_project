@@ -1,9 +1,6 @@
 # Save current_dir
 current_dir=$(pwd)
 
-# Back to lobby
-cd ..
-
 # Go to py3dtiler repertory
 cd py3dtilers
 
@@ -81,18 +78,34 @@ if [[ $choice == *"1"* ]]; then
     echo "Enter multiple types separated by spaces (e.g., 'building water traffic'):"
     read -ra object_types_input
 
-    # If 'all' is entered, populate 'objects' with all available object types
-    if [[ " ${object_types_input[@]} " =~ " all " ]]; then
-        objects=("building" "relief" "water" "bridge" "traffic" "tunnel" "plant" "furniture")
-    else
-        for object_type_input in "${object_types_input[@]}"; do
-            if validate_input "^(building|relief|water|bridge|traffic|tunnel|plant|furniture)$" "$object_type_input"; then
-                objects+=("$object_type_input")
+    valid_input=false
+
+    while ! $valid_input; do
+        # If 'all' is entered, populate 'objects' with all available object types
+        if [[ " ${object_types_input[@]} " =~ " all " ]]; then
+            objects=("building" "relief" "water" "bridge" "traffic" "tunnel" "plant" "furniture")
+            valid_input=true
+        else
+            objects=()
+            for object_type_input in "${object_types_input[@]}"; do
+                if validate_input "^(building|relief|water|bridge|traffic|tunnel|plant|furniture)$" "$object_type_input"; then
+                    objects+=("$object_type_input")
+                    valid_input=true
+                else
+                    echo "Invalid Object Type: $object_type_input. Please enter valid object types."
+                    valid_input=false
+                    break
+                fi
+            done
+
+            if $valid_input; then
+                break
             else
-                echo "Invalid Object Type: $object_type_input. Skipping..."
+                echo "Enter multiple types separated by spaces (e.g., 'building water traffic'):"
+                read -ra object_types_input
             fi
-        done
-    fi
+        fi
+    done
 fi
 
 if [[ $choice == *"2"* ]]; then

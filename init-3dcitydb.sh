@@ -1,14 +1,11 @@
 #!/bin/bash
 
-#Back to lobby
-cd ..
-
-# Variables pour la connexion à la base de données
+# Connexion var
 DB_USER=postgres
 DB_PASSWORD=postgres
 DB_NAME=my3dcitydb
 
-# Connexion à PostgreSQL en tant qu'utilisateur postgres
+# Connexion to PostgreSQL
 sudo -u postgres psql -c "CREATE DATABASE $DB_NAME;"
 sudo -u postgres psql -d $DB_NAME -c "CREATE EXTENSION postgis;"
 sudo -u postgres psql -d $DB_NAME -c "CREATE EXTENSION postgis_topology;"
