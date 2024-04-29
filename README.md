@@ -10,7 +10,7 @@ cd itowns_project
 
 ## Initialize 3DCityDB on PostgreSQL
 
-Go to ../3dcitydb-4.4.0/postgresql/ShellScripts/Unix/CONNECTION_DETAILS.sh and **change the content** of the file to this : 
+Go to **[../3dcitydb-4.4.0/postgresql/ShellScripts/Unix/CONNECTION_DETAILS.sh](utils/CONNECTION_DETAILS.sh)** and **change the content** of the file to this : 
 
 ```bash
 #!/bin/bash
