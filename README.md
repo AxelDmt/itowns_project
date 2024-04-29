@@ -238,4 +238,4 @@ Next you will run the script :
 ```bash
 ./obj_to_3dtiles.sh
 ```
-**⚠ Watch out the rotation of your 3D Objects**
+**⚠ Watch out the rotation of your 3D Objects** because bdexporter will do a 90° X rotation
