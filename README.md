@@ -23,7 +23,7 @@ export PGUSER=postgres
 #------------------------------------------------------------------------------
 ```
 
-When this is done, **execute [init-3dcitydb.sh](bash-scripts/init-3dcitydb.sh)** :
+When this is done, **execute [init-3dcitydb.sh](init-3dcitydb.sh)** :
 
 ```bash
 ./init-3dcitydb.sh
@@ -223,7 +223,7 @@ First of all you need to run one of the **bdexporters** python script (bdexporte
 python3 bdexporter_building.py
 ```
 
-After you need to do some changes in the obj_to_3dtiles.sh depending of the type of data you requested : 
+After you need to do some changes in the [obj_to_3dtiles.sh](obj_to_3dtiles.sh) depending of the type of data you requested : 
 
 ```python
 # Path to .obj directory
